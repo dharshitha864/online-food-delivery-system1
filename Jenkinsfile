@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Maven and JDK tool identifiers as configured in Jenkins Global Tool Configuration
-        maven 'Maven-3.9'
+        maven 'M3'
         jdk   'Java-17'
     }
 
