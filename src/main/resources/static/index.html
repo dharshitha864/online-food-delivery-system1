@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBite - Online Food Delivery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ============================================== -->
+    <!-- NAVIGATION BAR                                 -->
+    <!-- ============================================== -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <span class="logo-icon">🍔</span>
+                <span class="logo-text">Quick<span class="highlight">Bite</span></span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#restaurants" class="nav-link">Restaurants</a>
+                <a href="#menu" class="nav-link">Food Menu</a>
+                <a href="#orders-history" class="nav-link">Orders</a>
+            </nav>
+
+            <div class="nav-actions">
+                <div class="nav-search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="nav-search-input" placeholder="Search food, restaurants..." oninput="handleSearch(this.value)">
+                </div>
+
+                <button class="cart-btn" id="open-cart-btn" onclick="openCartModal()">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-text">Cart</span>
+                    <span class="cart-badge" id="cart-badge-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================== -->
+    <!-- HERO SECTION                                   -->
+    <!-- ============================================== -->
+    <section class="hero-section" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-tag">🚀 Fast • Fresh • Flavourful</div>
+                <h1 class="hero-title">Delicious food delivered straight to your door</h1>
+                <p class="hero-subtitle">
+                    Order from the best local restaurants in town with ultra-fast delivery. Hot pizzas, gourmet burgers, authentic South Indian, Asian wok, and healthy bowls!
+                </p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="btn btn-primary">Order Now</a>
+                    <a href="#restaurants" class="btn btn-secondary">Explore Restaurants</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">25-30m</span>
+                        <span class="stat-label">Avg. Delivery</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.8 ★</span>
+                        <span class="stat-label">Customer Rating</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">Free</span>
+                        <span class="stat-label">On orders $30+</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-card-stack">
+                    <div class="floating-badge badge-top">🔥 500+ Happy Foodies Today</div>
+                    <div class="hero-food-grid">
+                        <div class="food-tile">🍕<span>Pizza Palace</span></div>
+                        <div class="food-tile">🍔<span>Burger House</span></div>
+                        <div class="food-tile">🥞<span>South Indian</span></div>
+                        <div class="food-tile">🍜<span>Chinese Wok</span></div>
+                    </div>
+                    <div class="floating-badge badge-bottom">⚡ Guaranteed 30 Min Delivery</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- RESTAURANTS SECTION                            -->
+    <!-- ============================================== -->
+    <section class="section restaurants-section" id="restaurants">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <span class="section-tag">Featured Partners</span>
+                    <h2 class="section-title">Popular Restaurants</h2>
+                    <p class="section-subtitle">Handpicked kitchens known for top hygiene and delicious meals</p>
+                </div>
+                <button class="btn btn-outline" onclick="filterByRestaurant(null)">View All Foods</button>
+            </div>
+
+            <div class="restaurant-grid" id="restaurants-container">
+                <!-- Dynamically populated by script.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- FOOD MENU SECTION                              -->
+    <!-- ============================================== -->
+    <section class="section menu-section" id="menu">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <span class="section-tag">Fresh & Tasty</span>
+                    <h2 class="section-title">Explore Food Menu</h2>
+                    <p class="section-subtitle" id="menu-current-filter-info">Browse all mouth-watering items prepared on order</p>
+                </div>
+                <div class="menu-search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="menu-search-input" placeholder="Search dishes (e.g. burger, dosa, pizza)..." oninput="handleSearch(this.value)">
+                </div>
+            </div>
+
+            <!-- Category Pills -->
+            <div class="category-pills" id="category-pills">
+                <button class="pill active" onclick="filterByCategory('All')">🍽️ All</button>
+                <button class="pill" onclick="filterByCategory('Pizza')">🍕 Pizza</button>
+                <button class="pill" onclick="filterByCategory('Burgers')">🍔 Burgers</button>
+                <button class="pill" onclick="filterByCategory('South Indian')">🥞 South Indian</button>
+                <button class="pill" onclick="filterByCategory('Chinese')">🍜 Chinese</button>
+                <button class="pill" onclick="filterByCategory('Healthy')">🥗 Healthy</button>
+                <button class="pill" onclick="filterByCategory('Sides')">🍟 Sides</button>
+                <button class="pill" onclick="filterByCategory('Beverages')">🥤 Beverages</button>
+                <button class="pill" onclick="filterByCategory('Desserts')">🍰 Desserts</button>
+            </div>
+
+            <!-- Food Items Grid -->
+            <div class="food-grid" id="foods-container">
+                <!-- Dynamically populated by script.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- ORDER HISTORY SECTION                          -->
+    <!-- ============================================== -->
+    <section class="section orders-section" id="orders-history">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <span class="section-tag">Track Orders</span>
+                    <h2 class="section-title">Your Order History</h2>
+                    <p class="section-subtitle">Real-time status of orders placed during this session</p>
+                </div>
+            </div>
+
+            <div class="orders-list" id="orders-list-container">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- CART DRAWER / MODAL                            -->
+    <!-- ============================================== -->
+    <div class="modal-backdrop" id="cart-modal-backdrop" onclick="closeCartModal(event)">
+        <div class="cart-drawer" onclick="event.stopPropagation()">
+            <div class="cart-header">
+                <div class="cart-header-title">
+                    <span class="cart-icon">🛒</span>
+                    <h3>Your Cart</h3>
+                    <span class="cart-count-pill" id="cart-header-count">0 items</span>
+                </div>
+                <button class="close-btn" onclick="closeCartModal()">&times;</button>
+            </div>
+
+            <div class="cart-body" id="cart-items-container">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="cart-footer" id="cart-footer">
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Delivery Fee</span>
+                        <span id="cart-delivery-fee">$0.00</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Taxes & Fees (8%)</span>
+                        <span id="cart-tax">$0.00</span>
+                    </div>
+                    <div class="price-divider"></div>
+                    <div class="price-row total-row">
+                        <span>Total Amount</span>
+                        <span id="cart-grand-total">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="cart-action-buttons">
+                    <button class="btn btn-outline btn-sm" onclick="clearActiveCart()">Clear Cart</button>
+                    <button class="btn btn-primary btn-checkout" onclick="openCheckoutModal()">Proceed to Checkout ➔</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- CHECKOUT MODAL                                 -->
+    <!-- ============================================== -->
+    <div class="modal-backdrop" id="checkout-modal-backdrop" onclick="closeCheckoutModal(event)">
+        <div class="modal-content checkout-modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>🛍️ Checkout & Delivery Details</h3>
+                <button class="close-btn" onclick="closeCheckoutModal()">&times;</button>
+            </div>
+
+            <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cust-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="cust-name" required placeholder="e.g. John Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cust-phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="cust-phone" required placeholder="e.g. (555) 234-5678">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="cust-address">Delivery Address <span class="required">*</span></label>
+                        <textarea id="cust-address" rows="3" required placeholder="Street address, building, floor or special delivery instructions..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Payment Method</label>
+                        <div class="payment-options">
+                            <label class="payment-radio">
+                                <input type="radio" name="payment" value="Cash on Delivery" checked>
+                                <span class="radio-label">💵 Cash on Delivery</span>
+                            </label>
+                            <label class="payment-radio">
+                                <input type="radio" name="payment" value="Credit/Debit Card">
+                                <span class="radio-label">💳 Credit / Debit Card</span>
+                            </label>
+                            <label class="payment-radio">
+                                <input type="radio" name="payment" value="UPI / Online">
+                                <span class="radio-label">📱 UPI / Net Banking</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout summary summary box -->
+                <div class="checkout-summary-box">
+                    <div class="checkout-summary-header">
+                        <span>Items in Order:</span>
+                        <strong id="checkout-items-count">0 items</strong>
+                    </div>
+                    <div class="checkout-summary-total">
+                        <span>Total Payable:</span>
+                        <strong class="total-amount-highlight" id="checkout-total-payable">$0.00</strong>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCheckoutModal()">Back to Cart</button>
+                    <button type="submit" class="btn btn-primary" id="btn-place-order">Place Order Now 🎉</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- ORDER CONFIRMATION MODAL                       -->
+    <!-- ============================================== -->
+    <div class="modal-backdrop" id="confirmation-modal-backdrop">
+        <div class="modal-content confirmation-modal" onclick="event.stopPropagation()">
+            <div class="confirmation-icon">🎉</div>
+            <h2 class="confirmation-title">Order Placed Successfully!</h2>
+            <p class="confirmation-subtitle">Your food is being prepared with love and will arrive hot & fresh.</p>
+
+            <div class="order-receipt-card" id="receipt-card">
+                <!-- Dynamically populated with order receipt -->
+            </div>
+
+            <div class="confirmation-actions">
+                <button class="btn btn-secondary" onclick="viewOrdersHistoryTab()">View All Orders</button>
+                <button class="btn btn-primary" onclick="closeConfirmationModal()">Order More Food</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- TOAST NOTIFICATION CONTAINER                   -->
+    <!-- ============================================== -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ============================================== -->
+    <!-- FOOTER                                         -->
+    <!-- ============================================== -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span class="logo-icon">🍔</span>
+                <span class="logo-text">Quick<span class="highlight">Bite</span></span>
+                <p>Fast, reliable online food delivery system powered by Java 17, Maven, and modern web UI.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Restaurants</h4>
+                <span>Pizza Palace</span>
+                <span>Burger House</span>
+                <span>South Indian Kitchen</span>
+                <span>Chinese Wok</span>
+                <span>Healthy Bites</span>
+            </div>
+
+            <div class="footer-links">
+                <h4>Pipeline & Tech</h4>
+                <span>Java 17 (Adoptium / Temurin)</span>
+                <span>Apache Maven 3.9+</span>
+                <span>JUnit 5 Jupiter</span>
+                <span>Jenkins CI / CD Compatible</span>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; QuickBite Online Food Delivery System. Built for pairing with GitHub & Jenkins CI pipelines.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
